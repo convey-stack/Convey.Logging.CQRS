@@ -12,6 +12,12 @@ namespace Convey.Logging.CQRS
         public string GetExceptionTemplate(Exception ex)
         {
             var exceptionType = ex.GetType();
+
+            if (OnError is null)
+            {
+                return null;
+            }
+            
             return OnError.TryGetValue(exceptionType, out var template) ? template : null;
         }
     }
